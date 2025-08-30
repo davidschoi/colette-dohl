@@ -130,11 +130,11 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
         </a>{' '}
         for these precious photos, and{' '}
         <a
-          href="https://www.twentyeightoc.com/"
+          href="https://rosewadeevents.com/"
           target="_blank"
           className="font-semibold hover:text-black"
           rel="noreferrer">
-          Twenty Eight OC
+          Le Petite Rose
         </a>{' '}
         for a beautiful venue.
       </footer>
