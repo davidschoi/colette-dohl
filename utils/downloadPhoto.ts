@@ -1,5 +1,5 @@
 function forceDownload(blobUrl: string, filename: string) {
-  let a: any = document.createElement('a')
+  const a: HTMLAnchorElement = document.createElement('a')
   a.download = filename
   a.href = blobUrl
   document.body.appendChild(a)
@@ -17,8 +17,22 @@ export default function downloadPhoto(url: string, filename: string) {
   })
     .then((response) => response.blob())
     .then((blob) => {
-      let blobUrl = window.URL.createObjectURL(blob)
-      forceDownload(blobUrl, filename)
+      const blobUrl = window.URL.createObjectURL(blob)
+      const file = new File([blob], filename, { type: blob.type })
+      if (
+        typeof navigator !== 'undefined' &&
+        'canShare' in navigator &&
+        navigator.canShare({ files: [file] })
+      ) {
+        navigator
+          .share({ files: [file], title: filename })
+          .catch((e) => {
+            console.error(e)
+            forceDownload(blobUrl, filename)
+          })
+      } else {
+        forceDownload(blobUrl, filename)
+      }
     })
     .catch((e) => console.error(e))
 }
